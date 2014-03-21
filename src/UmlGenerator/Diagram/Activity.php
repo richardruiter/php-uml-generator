@@ -16,7 +16,7 @@ class Activity extends Diagram
      */
     public function start()
     {
-        $element = $this->getRenderer()->getElement('initialstate');
+        $element = $this->getRenderer()->getElement('Activity', 'InitialState');
         $this->addElement($element);
         return $this;
     }
@@ -29,7 +29,7 @@ class Activity extends Diagram
      */
     public function activity($label)
     {
-        $element = $this->getRenderer()->getElement('activity', $label);
+        $element = $this->getRenderer()->getElement('Activity', 'Activity');
         $this->addElement($element);
         return $this;
     }
@@ -41,7 +41,7 @@ class Activity extends Diagram
      */
     public function end()
     {
-        $element = $this->getRenderer()->getElement('finalstate');
+        $element = $this->getRenderer()->getElement('Activity', 'FinalState');
         $this->addElement($element);
         return $this;
     }

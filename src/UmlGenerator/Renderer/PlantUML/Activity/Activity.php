@@ -1,6 +1,6 @@
 <?php
 
-namespace UmlGenerator\Renderer\PlantUML;
+namespace UmlGenerator\Renderer\PlantUML\Activity;
 
 use UmlGenerator\Element;
 
@@ -13,7 +13,7 @@ class Activity extends Element
 {
     private $label;
 
-    public function __construct($label)
+    public function __construct($label = null)
     {
         $this->label = $label;
     }

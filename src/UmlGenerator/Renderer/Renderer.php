@@ -11,7 +11,34 @@ use UmlGenerator\Diagram\Diagram;
  */
 abstract class Renderer
 {
-    abstract public function generate(Diagram $diagram);
-    abstract public function getImageData(Diagram $diagram);
-    abstract public function getElement($id);
+    /**
+     * The diagram
+     * 
+     * @var Diagram 
+     */
+    private $diagram;
+
+    /**
+     * Get the diagram
+     * 
+     * @return Diagram
+     */
+    public function getDiagram()
+    {
+        return $this->diagram;
+    }
+
+    /**
+     * Set the diagram
+     * 
+     * @param \UmlGenerator\Diagram\Diagram $diagram
+     */
+    public function setDiagram(Diagram $diagram)
+    {
+        $this->diagram = $diagram;
+    }
+
+    abstract public function generate();
+    abstract public function getImageData();
+    abstract public function getElement($type, $id);
 }

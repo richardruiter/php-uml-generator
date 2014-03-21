@@ -11,30 +11,22 @@ use UmlGenerator\Diagram\Diagram;
  */
 class PlantUML extends Renderer
 {
-    public function getElement($id)
-    {
-        $args = func_get_args();
-        
-        switch($id)
-        {
-            case 'initialstate': 
-                $element = new PlantUML\InitialState();
-            break;
-            case 'finalstate': 
-                $element = new PlantUML\FinalState();
-            break;
-            case 'activity': 
-                $element = new PlantUML\Activity($args[1]);
-            break;
-        }
-        
-        return $element;
+    /**
+     * 
+     * @param string $type
+     * @param string $id
+     * @return \UmlGenerator\Element
+     */
+    public function getElement($type, $id)
+    {        
+        $cls = 'UmlGenerator\\Renderer\\PlantUML\\'.$type.'\\'.$id;
+        return new $cls;
     }
     
-    public function generate(Diagram $diagram)
+    public function generate()
     {
         $uml = "@startuml" . PHP_EOL;
-        foreach($diagram->getRelations() as $relation)
+        foreach($this->getDiagram()->getRelations() as $relation)
         {
             $uml .= sprintf(
                 '%s %s%s %s', 
@@ -55,9 +47,9 @@ class PlantUML extends Renderer
      * 
      * @return string imagedata
      */
-    public function getImageData(Diagram $diagram)
+    public function getImageData()
     {
-        $uml = $this->generate($diagram);
+        $uml = $this->generate();
         
         // write the uml in an temp file
         $temp_file = tempnam(sys_get_temp_dir(), 'umlfile');

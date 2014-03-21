@@ -1,6 +1,6 @@
 <?php
 
-namespace UmlGenerator\Renderer\PlantUML;
+namespace UmlGenerator\Renderer\PlantUML\Activity;
 
 use UmlGenerator\Element;
 

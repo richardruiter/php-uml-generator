@@ -133,6 +133,7 @@ abstract class Diagram
      */
     public function setRenderer($renderer)
     {
+        $renderer->setDiagram($this);
         $this->renderer = $renderer;
     }
     
