@@ -44,12 +44,6 @@ abstract class Diagram
      * @var Element 
      */
     protected $current_element = null;
-    
-    /**
-     *
-     * @var string
-     */
-    protected $nextlabel = null;
 
     /**
      * Constructor
@@ -88,11 +82,6 @@ abstract class Diagram
      */
     public function addRelation(Relation $relation)
     {
-        if (!is_null($this->nextlabel))
-        {
-            $relation->setLabel($this->nextlabel);
-            $this->nextlabel = null;
-        }
         $this->relations[] = $relation;
         return $this;
     }
@@ -114,7 +103,7 @@ abstract class Diagram
      */
     public function getImageData()
     {
-        return $this->getRenderer()->getImageData($this);
+        return $this->getRenderer()->getImageData();
     }
     
     /**
@@ -145,10 +134,22 @@ abstract class Diagram
      */
     public function label($txt)
     {
-        $this->nextlabel = $txt;
+        if (!is_null($this->current_element))
+        {
+            $this->current_element->setLabel($txt);
+        }
         return $this;
     }
     
+    /**
+     * 
+     */
+    public function getDiagramType()
+    {
+        return str_replace('UmlGenerator\\Diagram\\', '', get_class($this));
+    }
+
+
     /**
      * Add a not with direction
      * 

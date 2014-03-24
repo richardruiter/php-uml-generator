@@ -1,6 +1,6 @@
 <?php
 
-namespace UmlGenerator\Renderer\PlantUML\Activity;
+namespace UmlGenerator\Renderer\PlantUML\State;
 
 /**
  * Description of FinalState
@@ -11,6 +11,6 @@ class FinalState extends Element
 {
     public function _render()
     {
-        return '(*)';
+        return '[*]';
     }
 }

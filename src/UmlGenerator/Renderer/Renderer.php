@@ -41,4 +41,5 @@ abstract class Renderer
     abstract public function generate();
     abstract public function getImageData();
     abstract public function getElement($type, $id);
+    abstract public function getConcreteDiagram();
 }

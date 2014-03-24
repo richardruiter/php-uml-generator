@@ -24,22 +24,8 @@ class PlantUML extends Renderer
     }
     
     public function generate()
-    {
-        $uml = "@startuml" . PHP_EOL;
-        foreach($this->getDiagram()->getRelations() as $relation)
-        {
-            $uml .= sprintf(
-                '%s %s%s %s', 
-                $relation->getFrom()->render(), 
-                $this->getArrowFromDirection($relation->getDirection()),
-                $relation->getLabel(),
-                $relation->getTo()->render()
-            );
-            $uml .= PHP_EOL;
-        }
-        $uml .= "@enduml" . PHP_EOL;
-        
-        return $uml;
+    {       
+        return $this->getConcreteDiagram()->generate();
     }
     
     /**
@@ -76,7 +62,7 @@ class PlantUML extends Renderer
      * @param string $direction
      * @return string
      */
-    private function getArrowFromDirection($direction)
+    public function getArrowFromDirection($direction)
     {
         $arrow = '-->';
         switch($direction)
@@ -94,4 +80,12 @@ class PlantUML extends Renderer
         
         return $arrow;
     }
+
+    public function getConcreteDiagram()
+    {
+        $type = $this->getDiagram()->getDiagramType();
+        $cls = 'UmlGenerator\\Renderer\\PlantUML\\'.$type.'\\Diagram';
+        return new $cls($this);
+    }
+
 }

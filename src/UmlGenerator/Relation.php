@@ -14,7 +14,6 @@ class Relation
     private $from;
     private $to;
     private $direction;
-    private $label = null;
     
     public function __construct(Element $from, Element $to, $direction = null)
     {
@@ -55,17 +54,5 @@ class Relation
         $this->direction = $arrow;
         return $this;
     }
-    
-    public function getLabel()
-    {
-        return (!is_null($this->label)) ? '['.$this->label.']' : null;
-    }
-
-    public function setLabel($label)
-    {
-        $this->label = $label;
-        return $this;
-    }
-
 
 }

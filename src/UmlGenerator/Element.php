@@ -11,6 +11,7 @@ abstract class Element
 {
     private $note = null;
     private $note_dir = 'right';
+    protected $label = null;
     
     public function getNote()
     {
@@ -23,19 +24,33 @@ abstract class Element
         $this->note_dir = $direction;
         return $this;
     }
+    
+    public function getNote_dir()
+    {
+        return $this->note_dir;
+    }
 
+    public function setNote_dir($note_dir)
+    {
+        $this->note_dir = $note_dir;
+    }
+
+    
     public function render()
     {
         $output = $this->_render();
-        if (!is_null($this->note))
-        {
-            $output .= PHP_EOL;
-            $output .= 'note ' . $this->note_dir . PHP_EOL;
-            $output .= $this->note . PHP_EOL;
-            $output .= 'end note';
-            $this->note = null;
-        }
         return $output;
+    }
+    
+    public function getLabel()
+    {
+        return $this->label;
+    }
+
+    public function setLabel($label)
+    {
+        $this->label = $label;
+        return $this;
     }
     
     abstract protected function _render();

@@ -24,12 +24,13 @@ class Activity extends Diagram
     /**
      * Create an activity element
      * 
-     * @param string $label
+     * @param string $title
      * @return \UmlGenerator\Diagram\Activity
      */
-    public function activity($label)
+    public function activity($title)
     {
         $element = $this->getRenderer()->getElement('Activity', 'Activity');
+        $element->setTitle($title);
         $this->addElement($element);
         return $this;
     }

@@ -1,13 +1,13 @@
 <?php
 
-namespace UmlGenerator\Renderer\PlantUML\Activity;
+namespace UmlGenerator\Renderer\PlantUML\State;
 
 /**
  * Description of Activity
  *
  * @author rruiter
  */
-class Activity extends Element
+class State extends Element
 {
     private $title;
 
@@ -18,7 +18,7 @@ class Activity extends Element
 
     public function _render()
     {
-        return sprintf('"%s"', $this->getTitle());
+        return $this->getTitle();
     }
     
     public function getTitle()
@@ -28,6 +28,6 @@ class Activity extends Element
 
     public function setTitle($title)
     {
-        $this->title = $title;
+        $this->title = str_replace(' ', '', $title);
     }
 }
