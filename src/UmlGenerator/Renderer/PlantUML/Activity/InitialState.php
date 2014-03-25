@@ -13,4 +13,9 @@ class InitialState extends Element
     {
         return '(*)';
     }
+
+    public function getId()
+    {
+        return 'activity_initial';
+    }
 }

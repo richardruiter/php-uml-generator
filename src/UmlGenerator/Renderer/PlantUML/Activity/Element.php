@@ -20,4 +20,10 @@ class Element extends BaseElement
     {
         
     }
+
+    public function getId()
+    {
+        
+    }
+
 }

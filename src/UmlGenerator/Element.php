@@ -54,4 +54,5 @@ abstract class Element
     }
     
     abstract protected function _render();
+    abstract public function getId();
 }

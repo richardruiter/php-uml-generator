@@ -11,11 +11,12 @@ use UmlGenerator\Renderer\PlantUML\Diagram as PlantUMLDiagram;
  */
 class Diagram extends PlantUMLDiagram
 {
-    public function generate()
+    protected function _generate()
     {
         $renderer = $this->getRenderer();
         
-        $uml = "@startuml" . PHP_EOL;
+        $uml = '';
+        
         foreach($renderer->getDiagram()->getRelations() as $relation)
         {
             $from = $relation->getFrom();
@@ -41,8 +42,7 @@ class Diagram extends PlantUMLDiagram
             }
             
         }
-        $uml .= "@enduml" . PHP_EOL;
-                
+        
         return $uml;
     }
 

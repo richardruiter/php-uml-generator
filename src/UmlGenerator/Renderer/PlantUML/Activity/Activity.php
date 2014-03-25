@@ -18,7 +18,7 @@ class Activity extends Element
 
     public function _render()
     {
-        return sprintf('"%s"', $this->getTitle());
+        return sprintf('"%s" << %s >>', $this->getTitle(), $this->getId());
     }
     
     public function getTitle()
@@ -29,5 +29,10 @@ class Activity extends Element
     public function setTitle($title)
     {
         $this->title = $title;
+    }
+
+    public function getId()
+    {
+        return 'activity'.str_replace(' ', '', $this->getTitle());
     }
 }

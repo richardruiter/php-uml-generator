@@ -5,6 +5,7 @@ namespace UmlGenerator\Diagram;
 use UmlGenerator\Renderer\Renderer;
 use UmlGenerator\Element;
 use UmlGenerator\Relation;
+use UmlGenerator\Skin;
 
 /**
  * Base class for diagrams. It holds all relations between elements.
@@ -39,11 +40,30 @@ abstract class Diagram
     protected $relations = array();
     
     /**
+     * Previous element
+     * 
+     * @var Element 
+     */
+    protected $previous_element = null;
+    
+    /**
      * Current element
      * 
      * @var Element 
      */
     protected $current_element = null;
+    
+    /**
+     * 
+     */
+    protected $history = array();
+    
+    /**
+     * Set diagram skin
+     * 
+     * @var Skin[]
+     */
+    protected $skins = array();
 
     /**
      * Constructor
@@ -64,13 +84,7 @@ abstract class Diagram
      */
     public function addElement(Element $element)
     {
-        if (!is_null($this->current_element))
-        {
-            $relation = new Relation($this->current_element, $element, $this->getDirection());
-            $this->addRelation($relation);
-        }
-        $this->elements[] = $element;
-        $this->current_element = $element;
+        $this->elements[$element->getId()] = $element;
         return $this;
     }
     
@@ -82,7 +96,8 @@ abstract class Diagram
      */
     public function addRelation(Relation $relation)
     {
-        $this->relations[] = $relation;
+        $relation->setDirection($this->getDirection());
+        $this->relations[$relation->getId()] = $relation;
         return $this;
     }
             
@@ -136,7 +151,7 @@ abstract class Diagram
     {
         if (!is_null($this->current_element))
         {
-            $this->current_element->setLabel($txt);
+            $this->getPreviousElement()->setLabel($txt);
         }
         return $this;
     }
@@ -159,7 +174,7 @@ abstract class Diagram
      */
     public function note($note, $direction = self::DIRECTION_RIGHT)
     {
-        $this->current_element->setNote($note, $direction);
+        $this->getPreviousElement()->setNote($note, $direction);
         return $this;
     }
     
@@ -234,5 +249,46 @@ abstract class Diagram
     public function getRelations()
     {
         return $this->relations;
+    }
+    
+    public function getCurrentElement()
+    {
+        return $this->current_element;
+    }
+
+    public function setCurrentElement(Element $current_element)
+    {
+        $this->current_element = $current_element;
+        $this->history[] = $current_element;
+    }
+    
+    public function getPreviousElement()
+    {
+        return $this->previous_element;
+    }
+
+    public function setPreviousElement(Element $previous_element)
+    {
+        $this->previous_element = $previous_element;
+    }
+
+    public function setDiagramSkin(Skin $skin)
+    {
+        $this->addSkin($skin);
+        return $this;
+    }
+    
+    public function getSkins()
+    {
+        return $this->skins;
+    }
+
+    public function addSkin(Skin $skin, $prefix = null, $postfix = null)
+    {
+        $o = new \stdClass();
+        $o->skin = $skin;
+        $o->prefix = $prefix;
+        $o->postfix = $postfix;
+        $this->skins[$prefix.$postfix] = $o;
     }
 }

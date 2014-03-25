@@ -3,6 +3,7 @@
 namespace UmlGenerator\Diagram;
 
 use UmlGenerator\Relation;
+use UmlGenerator\Skin;
 
 /**
  * Generate a state diagram
@@ -20,20 +21,7 @@ class State extends Diagram
     {
         $element = $this->getRenderer()->getElement('State', 'InitialState');
         $this->addElement($element);
-        return $this;
-    }
-    
-    /**
-     * Create an activity element
-     * 
-     * @param string $title
-     * @return \UmlGenerator\Diagram\State
-     */
-    public function state($title)
-    {
-        $element = $this->getRenderer()->getElement('State', 'State');
-        $element->setTitle($title);
-        $this->addElement($element);
+        $this->setCurrentElement($element);
         return $this;
     }
     
@@ -45,16 +33,28 @@ class State extends Diagram
         // from
         $element_from = $this->getRenderer()->getElement('State', 'State');
         $element_from->setTitle($from);
+        $this->addElement($element_from);
         
         // to
         $element_to = $this->getRenderer()->getElement('State', 'State');
         $element_to->setTitle($to);
+        $this->addElement($element_to);
         
-        // add relation
-        $relation = new Relation($element_from, $element_to, $this->getDirection());
+        // add relations
+        if (sizeof($this->relations) == 0 && $this->getCurrentElement())
+        {
+            // initial relation
+            $relation = new Relation($this->getCurrentElement(), $element_from);
+            $this->addRelation($relation);
+        }
+        $relation = new Relation($element_from, $element_to);
         $this->addRelation($relation);
         
-        $this->current_element = $element_from;
+        // set current element to 
+        $this->setPreviousElement($element_from);
+        
+        // set current element to 
+        $this->setCurrentElement($element_to);
         
         return $this;
     }
@@ -68,7 +68,27 @@ class State extends Diagram
     {
         $element = $this->getRenderer()->getElement('State', 'FinalState');
         $this->addElement($element);
+        if ($this->getCurrentElement())
+        {
+            $relation = new Relation($this->getCurrentElement(), $element);
+            $this->addRelation($relation);
+        }
+        
+        // this state ends here... make previous current
+        //$this->setCurrentElement($this->history[sizeof($this->history)-2]);
+        
         return $this;
     }
 
+    public function setStateSkin(Skin $skin, $stateid = null)
+    {
+        if (!is_null($stateid))
+        {
+            $element = $this->getRenderer()->getElement('State', 'State');
+            $element->setTitle($stateid);
+            $stateid = $element->getId();
+        }
+        $this->addSkin($skin, 'state', $stateid);
+        return $this;
+    }
 }

@@ -13,4 +13,9 @@ class InitialState extends Element
     {
         return '[*]';
     }
+
+    public function getId()
+    {
+        return 'state_initial';
+    }
 }

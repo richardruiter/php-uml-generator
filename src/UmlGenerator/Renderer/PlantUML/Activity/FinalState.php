@@ -13,4 +13,9 @@ class FinalState extends Element
     {
         return '(*)';
     }
+
+    public function getId()
+    {
+        return 'activity_final';
+    }
 }

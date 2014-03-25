@@ -13,4 +13,10 @@ class FinalState extends Element
     {
         return '[*]';
     }
+
+    public function getId()
+    {
+        return 'state_final';
+    }
+
 }

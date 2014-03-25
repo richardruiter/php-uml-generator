@@ -55,4 +55,8 @@ class Relation
         return $this;
     }
 
+    public function getId()
+    {
+        return $this->getFrom()->getId() . '-' . $this->getTo()->getId();
+    }
 }

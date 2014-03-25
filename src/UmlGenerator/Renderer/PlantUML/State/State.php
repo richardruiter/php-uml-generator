@@ -18,7 +18,7 @@ class State extends Element
 
     public function _render()
     {
-        return $this->getTitle();
+        return sprintf('%s << %s >>', $this->getTitle(), $this->getId());
     }
     
     public function getTitle()
@@ -29,5 +29,10 @@ class State extends Element
     public function setTitle($title)
     {
         $this->title = str_replace(' ', '', $title);
+    }
+
+    public function getId()
+    {
+        return 'state_'.$this->getTitle();
     }
 }
