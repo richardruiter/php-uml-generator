@@ -43,7 +43,7 @@ class PlantUML extends Renderer
         
         // create image file
         $temp_img = tempnam(sys_get_temp_dir(), 'umlimage');
-        $jar = UMLGENERATOR_BASE_PATH . '/bin/plantuml.jar';
+        $jar = dirname(__FILE__) . '/../../../bin/plantuml.jar';
         shell_exec('cat '.$temp_file.' | java -jar '.$jar.' -pipe > '.$temp_img);
         
         // get image

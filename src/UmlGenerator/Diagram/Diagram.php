@@ -42,7 +42,7 @@ abstract class Diagram
     /**
      * Previous element
      * 
-     * @var Element 
+     * @var UmlGenerator\Element 
      */
     protected $previous_element = null;
     
@@ -53,6 +53,13 @@ abstract class Diagram
      */
     protected $current_element = null;
     
+    /**
+     *
+     * @var UmlGenerator\Relation  
+     */
+    protected $current_relation = null;
+
+
     /**
      * 
      */
@@ -98,6 +105,7 @@ abstract class Diagram
     {
         $relation->setDirection($this->getDirection());
         $this->relations[$relation->getId()] = $relation;
+        $this->setCurrentRelation($relation);
         return $this;
     }
             
@@ -149,7 +157,7 @@ abstract class Diagram
      */
     public function label($txt)
     {
-        if (!is_null($this->current_element))
+        if (!is_null($this->getPreviousElement()))
         {
             $this->getPreviousElement()->setLabel($txt);
         }
@@ -166,7 +174,7 @@ abstract class Diagram
 
 
     /**
-     * Add a not with direction
+     * Add a note with direction
      * 
      * @param string $note
      * @param string $direction
@@ -174,7 +182,10 @@ abstract class Diagram
      */
     public function note($note, $direction = self::DIRECTION_RIGHT)
     {
-        $this->getPreviousElement()->setNote($note, $direction);
+        if (!is_null($this->getCurrentElement()))
+        {
+            $this->getCurrentElement()->setNote($note, $direction);
+        }
         return $this;
     }
     
@@ -271,7 +282,19 @@ abstract class Diagram
     {
         $this->previous_element = $previous_element;
     }
+    
+    public function getCurrentRelation()
+    {
+        return $this->current_relation;
+    }
 
+    public function setCurrentRelation(Relation $current_relation)
+    {
+        $this->current_relation = $current_relation;
+        return $this;
+    }
+
+    
     public function setDiagramSkin(Skin $skin)
     {
         $this->addSkin($skin);

@@ -20,6 +20,7 @@ class Diagram extends PlantUMLDiagram
         foreach($renderer->getDiagram()->getRelations() as $relation)
         {
             $from = $relation->getFrom();
+            $to = $relation->getTo();
             
             $label = $from->getLabel();
             $uml .= sprintf(
@@ -30,18 +31,20 @@ class Diagram extends PlantUMLDiagram
                 (!empty($label)) ? ':' . $label : null
             );
             $uml .= PHP_EOL;
-            
+                        
             // note
-            if (!is_null($from->getNote()))
+            if (!is_null($to->getNote()))
             {
-                $uml .= 'note ' . $from->getNote_dir() . ' of ' . $from->getTitle() . PHP_EOL;
-                $uml .= $from->getNote() . PHP_EOL;
+                $uml .= 'note ' . $to->getNote_dir() . ' of ' . $to->getTitle() . PHP_EOL;
+                //$uml .= 'note ' . $to->getNote_dir() . ' on link' . PHP_EOL;
+                $uml .= $to->getNote() . PHP_EOL;
                 $uml .= 'end note';
                 $uml .= PHP_EOL;
-                $from->setNote(NULL);
+                $to->setNote(NULL);
             }
             
         }
+        //exit;
         
         return $uml;
     }

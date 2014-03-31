@@ -21,7 +21,7 @@ abstract class Element
     public function setNote($note, $direction = 'right')
     {
         $this->note = $note;
-        $this->note_dir = $direction;
+        $this->setNote_dir($direction);
         return $this;
     }
     

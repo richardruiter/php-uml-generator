@@ -66,6 +66,7 @@ abstract class Diagram
         $output .= $this->skinLine('FontSize', $skin->getFontsize(), $postfix);
         $output .= $this->skinLine('FontStyle', $skin->getFontstyle(), $postfix);
         $output .= $this->skinLine('FontName', $skin->getFontname(), $postfix);
+        $output .= $this->skinLine('Align', $skin->getAlign(), $postfix);
         $output .= $this->skinLine('shadowing', $skin->getShadow() ? 'true' : 'false', $postfix);
         $output .= '}' . PHP_EOL;
         return $output;

@@ -41,7 +41,7 @@ class Activity extends Diagram
             $relation = new Relation($this->getCurrentElement(), $element);
             $this->addRelation($relation);
         }
-        $this->setPreviousElement($this->getCurrentElement());
+        $this->setPreviousElement($element);
         $this->setCurrentElement($element);
         return $this;
     }

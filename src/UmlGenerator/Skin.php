@@ -17,6 +17,8 @@ class Skin
     private $fontstyle = 'plain';
     private $fontname = 'Arial';
     
+    private $align = 'center';
+    
     private $shadow = true;
     
     public function getBackgroundcolor()
@@ -78,6 +80,17 @@ class Skin
     {
         $this->fontname = $fontname;
     } 
+ 
+    public function getAlign()
+    {
+        return $this->align;
+    }
+
+    public function setAlign($align)
+    {
+        $this->align = $align;
+        return $this;
+    }
     
     public function getShadow()
     {

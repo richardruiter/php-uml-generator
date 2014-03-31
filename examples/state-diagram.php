@@ -44,5 +44,5 @@ $diagram
         ->transition('WaitingForConfimation', 'StartMigration')
     ->end();
 
-$diagram->renderImage();
+$diagram->getImageData();
 exit;
